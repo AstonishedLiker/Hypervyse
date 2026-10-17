@@ -8,31 +8,60 @@ permissions:
 jobs:
   commitlint:
     runs-on: ubuntu-latest
+    env:
+      COMMITLINT_DIR: ${{ runner.temp }}/commitlint
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.JS
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: npm
 
       - name: Install commitlint
-        run: npm install -D @commitlint/cli @commitlint/config-conventional
+        run: |
+          mkdir -p "$COMMITLINT_DIR"
+          npm install \
+            --prefix "$COMMITLINT_DIR" \
+            --no-save \
+            --no-package-lock \
+            @commitlint/cli \
+            @commitlint/config-conventional
+
+          cat > "$COMMITLINT_DIR/commitlint.config.cjs" <<'EOF'
+          module.exports = {
+            extends: ['@commitlint/config-conventional'],
+          };
+          EOF
+
+          echo "$COMMITLINT_DIR/node_modules/.bin" >> "$GITHUB_PATH"
 
       - name: Print versions
         run: |
           git --version
           node --version
           npm --version
-          npx commitlint --version
+          commitlint --version
 
-      - name: Validate current commit (last commit) with commitlint
+      - name: Validate current commit with commitlint
         if: github.event_name == 'push'
-        run: npx commitlint --last --verbose
+        run: |
+          commitlint \
+            --config "$COMMITLINT_DIR/commitlint.config.cjs" \
+            --last \
+            --verbose
 
       - name: Validate PR commits with commitlint
         if: github.event_name == 'pull_request'
-        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          commitlint \
+            --config "$COMMITLINT_DIR/commitlint.config.cjs" \
+            --from "$BASE_SHA" \
+            --to "$HEAD_SHA" \
+            --verbose

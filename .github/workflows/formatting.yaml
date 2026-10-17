@@ -58,4 +58,4 @@ jobs:
           printf '%s\n' "$RUNNER_TEMP/edk2" | uv run --group dev scripts/setup.py
 
       - name: Check all C source files and headers
-        run: uv run --group dev .github/scripts/check-formatting.py
+        run: uv run --group dev .github/workflows/scripts/check-formatting.py

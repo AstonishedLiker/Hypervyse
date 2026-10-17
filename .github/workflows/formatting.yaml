@@ -1,7 +1,6 @@
 name: Check C formatting
 
-on:
-  workflow_dispatch:
+on: [push, pull_request]
 
 permissions:
   contents: read

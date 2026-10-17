@@ -1,0 +1,26 @@
+## @file
+#  HypervysePkg.dec
+#
+#  Hypervyse Package Declaration.
+#
+#  Copyright (c) 2026 Alexis Lecam <alexis.lecam@hexaliker.fr>
+#  Copyright (c) 2026 Evann Borde <evann.borde@spxnso.fr>
+#
+#  SPDX-License-Identifier: MIT
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = HypervysePkg
+  PACKAGE_GUID                   = 1125D066-6D82-43C7-AEE5-1FDF27E2A4F3
+  PACKAGE_VERSION                = 1.0
+
+[Includes]
+  Include
+
+[Guids]
+  gHypervyseTokenSpaceGuid = { 0x28C990C6, 0xB4D2, 0x4731, { 0xB9, 0xD6, 0x94, 0x05, 0x65, 0x62, 0xEA, 0x2F } }
+
+[PcdsFixedAtBuild]
+  # 0x00 = Intel, 0x01 = AMD
+  gHypervyseTokenSpaceGuid.PcdSiliconVendor|0x00|UINT8|0x00000001

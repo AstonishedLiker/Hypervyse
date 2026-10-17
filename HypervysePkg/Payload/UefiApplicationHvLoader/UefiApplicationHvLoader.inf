@@ -1,0 +1,38 @@
+## @file
+#  UefiApplicationHvLoader.inf
+#
+#  Loads Hypervyse through a UEFI application.
+#
+#  Copyright (c) 2026 Alexis Lecam <alexis.lecam@hexaliker.fr>
+#  Copyright (c) 2026 Evann Borde <evann.borde@spxnso.fr>
+#
+#  SPDX-License-Identifier: MIT
+##
+
+[Defines]
+  INF_VERSION                    = 1.25
+  BASE_NAME                      = UefiApplicationHvLoader
+  FILE_GUID                      = 81D164E8-E0C8-4B08-BBBB-B54FECF22059
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]
+  UefiApplicationHvLoader.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  HypervysePkg/HypervysePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  MemoryAllocationLib
+  BaseMemoryLib
+  PcdLib
+
+[Pcd]
+  gHypervyseTokenSpaceGuid.PcdSiliconVendor

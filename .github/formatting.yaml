@@ -1,0 +1,61 @@
+name: Check C formatting
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  EDK2_TAG: edk2-stable202608
+
+jobs:
+  formatting:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.workspace }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv
+
+      - name: Restore EDK II checkout
+        id: edk2-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/edk2
+          key: edk2-checkout-${{ runner.os }}-${{ env.EDK2_TAG }}-v1
+
+      - name: Clone pinned EDK II source
+        if: steps.edk2-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 --single-branch --branch "$EDK2_TAG" \
+            https://github.com/tianocore/edk2.git "$RUNNER_TEMP/edk2"
+
+      - name: Verify EDK II checkout
+        run: |
+          test "$(git -C "$RUNNER_TEMP/edk2" rev-parse HEAD)" = \
+            "$(git -C "$RUNNER_TEMP/edk2" rev-parse "refs/tags/$EDK2_TAG^{commit}")"
+          test -z "$(git -C "$RUNNER_TEMP/edk2" status --porcelain --untracked-files=no)"
+
+      - name: Cache EDK II checkout
+        if: steps.edk2-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/edk2
+          key: ${{ steps.edk2-cache.outputs.cache-primary-key }}
+
+      - name: Set up pinned TianoCore Uncrustify release
+        run: |
+          printf '%s\n' "$RUNNER_TEMP/edk2" | uv run --group dev scripts/setup.py
+
+      - name: Check all C source files and headers
+        run: uv run --group dev .github/scripts/check-formatting.py

@@ -9,8 +9,8 @@
   SPDX-License-Identifier: MIT
 **/
 
-#ifndef __HYPERVISORCORELIB_H__
-#define __HYPERVISORCORELIB_H__
+#ifndef __STATUS_H__
+#define __STATUS_H__
 
 typedef enum {
   HyvStatusSuccess = 0,

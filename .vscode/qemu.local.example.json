@@ -1,0 +1,4 @@
+{
+  "edk2": "../edk2",
+  "toolchain": "GCC"
+}

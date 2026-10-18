@@ -1,0 +1,34 @@
+## @file
+#  QemuDebugLib.inf
+#
+#  Rendezvous with the QEMU debugger before the application entry point.
+#  cf. docs/qemu-debugging.md
+#
+#  Copyright (c) 2026 Alexis Lecam <alexis.lecam@hexaliker.fr>
+#  Copyright (c) 2026 Evann Borde <evann.borde@spxnso.fr>
+#
+#  SPDX-License-Identifier: MIT
+##
+
+[Defines]
+  INF_VERSION    = 1.25
+  BASE_NAME      = QemuDebugLib
+  FILE_GUID      = 98B18EE8-0FCE-4B07-BDBE-28FA7A4A96FC
+  MODULE_TYPE    = UEFI_APPLICATION
+  VERSION_STRING = 1.0
+  LIBRARY_CLASS  = NULL|UEFI_APPLICATION
+  CONSTRUCTOR    = HyvQemuDebugConstructor
+
+[Sources]
+  QemuDebugLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  UefiBootServicesTableLib
+
+[Protocols]
+  gEfiLoadedImageProtocolGuid ## CONSUMES

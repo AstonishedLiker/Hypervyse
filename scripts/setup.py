@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --group dev
+#!/usr/bin/env -S uv run --group dev --script
 # noqa: EXE001
 """Set up the EDK II-matched formatter and Git pre-commit hook, or format HypervysePkg.
 
@@ -29,7 +29,7 @@ PLUGIN = Path(".pytool/Plugin/UncrustifyCheck")
 
 HOOK_MARKER = "# Hypervyse managed formatter hook"
 
-HOOK_SCRIPT = r'''#!/usr/bin/env -S uv run --group dev
+HOOK_SCRIPT = r'''#!/usr/bin/env -S uv run --group dev --script
 # Hypervyse managed formatter hook
 """Check staged C/header files with the configured EDK II Uncrustify."""
 
@@ -344,6 +344,18 @@ def install_hook():
     print(f"Installed Git pre-commit hook: {hook}")
     print("Commits will now check staged .c and .h files using EDK II Uncrustify.")
 
+def configure_qemu(edk2):
+    config = ROOT / ".vscode/qemu.local.json"
+    config.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with config.open("x", encoding="utf-8") as stream:
+            json.dump({"edk2": str(edk2), "toolchain": "GCC"}, stream, indent=2)
+            stream.write("\n")
+    except FileExistsError:
+        print(f"Existing QEMU configuration preserved: {config}")
+    else:
+        print(f"Created QEMU configuration: {config}")
+
 def setup():
     edk2 = resolve_edk2()
     url, archive_sha, version, config = read_release(edk2)
@@ -369,6 +381,7 @@ def setup():
 
     print(f"\nExecutable: {executable}\nConfiguration: {config}")
 
+    configure_qemu(edk2)
     install_hook()
 
     print("\nReady. Format with: uv run scripts/setup.py format")

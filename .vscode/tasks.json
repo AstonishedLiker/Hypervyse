@@ -1,0 +1,63 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Hypervyse: launch QEMU",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "run",
+        "scripts/qemu.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      }
+    },
+    {
+      "label": "Hypervyse: start QEMU debugger",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "run",
+        "--group",
+        "dev",
+        "scripts/qemu.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "HYV_VSCODE_DEBUG": "1"
+        }
+      },
+      "problemMatcher": {
+        "owner": "hypervyse-qemu",
+        "pattern": {
+          "regexp": "^(?!)()(.*)$",
+          "file": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^Preparing Hypervyse QEMU\\.\\.\\.$",
+          "endsPattern": "^QEMU debug server ready$"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      },
+      "isBackground": true
+    }
+  ]
+}

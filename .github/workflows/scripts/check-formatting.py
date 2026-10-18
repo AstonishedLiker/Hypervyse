@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --group dev
+#!/usr/bin/env -S uv run --group dev --script
 # noqa: EXE001
 """Check all Git-tracked C sources and headers without changing files."""
 import json

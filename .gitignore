@@ -1,5 +1,13 @@
 Build
+out
+
 .edkCode
 .venv
-.vscode
-out
+.vscode/*
+
+**/__pycache__/**
+
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/qemu.local.example.json

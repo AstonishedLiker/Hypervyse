@@ -11,6 +11,9 @@
 
 #include <Hypervyse/SiliconVendor.h>
 
+#include <Library/UefiBootServicesTableLib.h>
+#include <Library/UefiRuntimeServicesTableLib.h>
+#include <Library/DebugLib.h>
 #include <Library/UefiLib.h>
 #include <Library/PcdLib.h>
 
@@ -18,15 +21,12 @@
 
 EFI_STATUS
 EFIAPI
-UefiMain (
+UefiApplicationHvLoaderMain (
   IN EFI_HANDLE        ImageHandle,
   IN EFI_SYSTEM_TABLE  *SystemTable
   )
 {
-  Print (
-    L"Hi from UefiApplicationHvLoader.efi! HYV_BUILD_SILICON_VENDOR: '%s'\n",
-    HYV_BUILD_SILICON_VENDOR == 0x0 ? L"Intel" : L"AMD"
-    );
+  DEBUG ((DEBUG_INFO, "%a: Loaded (ImageHandle: %p)", __func__, ImageHandle));
 
   return EFI_SUCCESS;
 }

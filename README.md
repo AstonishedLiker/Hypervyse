@@ -48,6 +48,7 @@ See [the `LICENSE` file](./LICENSE) for the full MIT License text.
 This project builds upon and uses components from the EDK-II project, which is licensed under the **BSD-2-Clause-Patent License**. This includes:
 
 - EDK2 libraries
+- Python helpers
 - Build system and tooling
 
 See [the `LICENSE.edk2` file](./LICENSE.edk2) for the full BSD-2-Clause-Patent License text.

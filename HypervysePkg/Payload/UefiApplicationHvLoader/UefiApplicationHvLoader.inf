@@ -15,7 +15,7 @@
   FILE_GUID                      = 81D164E8-E0C8-4B08-BBBB-B54FECF22059
   MODULE_TYPE                    = UEFI_APPLICATION
   VERSION_STRING                 = 1.0
-  ENTRY_POINT                    = UefiMain
+  ENTRY_POINT                    = UefiApplicationHvLoaderMain
 
 [Sources]
   UefiApplicationHvLoader.c
@@ -26,6 +26,7 @@
   HypervysePkg/HypervysePkg.dec
 
 [LibraryClasses]
+  DebugLib
   UefiApplicationEntryPoint
   UefiLib
   UefiBootServicesTableLib

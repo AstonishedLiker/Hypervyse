@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Hypervyse: launch QEMU",
+      "type": "lldb-dap",
+      "request": "attach",
+      "preLaunchTask": "Hypervyse: start QEMU debugger",
+      "attachCommands": [
+        "script lldb.debugger.SetSelectedTarget(lldb.debugger.CreateTargetWithFileAndArch(None, 'x86_64'))",
+        "gdb-remote 127.0.0.1:1234",
+        "hyv-bootstrap --run"
+      ],
+      "commandEscapePrefix": "`",
+      "postRunCommands": [
+        "target stop-hook add -o \"hyv-sync\"",
+        "continue"
+      ],
+      "timeout": 240,
+      "initCommands": [
+        "command script import \"${workspaceFolder}/scripts/uefi_types.py\"",
+        "command script import \"${workspaceFolder}/scripts/uefi_symbols.py\""
+      ]
+    },
+    {
+      "name": "Hypervyse: debug application",
+      "type": "lldb-dap",
+      "request": "attach",
+      "preLaunchTask": "Hypervyse: start QEMU debugger",
+      "attachCommands": [
+        "script lldb.debugger.SetSelectedTarget(lldb.debugger.CreateTargetWithFileAndArch(None, 'x86_64'))",
+        "gdb-remote 127.0.0.1:1234",
+        "hyv-bootstrap"
+      ],
+      "commandEscapePrefix": "`",
+      "timeout": 240,
+      "initCommands": [
+        "command script import \"${workspaceFolder}/scripts/uefi_types.py\"",
+        "command script import \"${workspaceFolder}/scripts/uefi_symbols.py\""
+      ],
+      "postRunCommands": [
+        "target stop-hook add -o \"hyv-sync\"",
+        "continue"
+      ]
+    }
+  ]
+}

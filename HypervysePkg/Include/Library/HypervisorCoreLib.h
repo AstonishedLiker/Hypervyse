@@ -9,8 +9,7 @@
   SPDX-License-Identifier: MIT
 **/
 
-#ifndef __HYPERVISORCORELIB_H__
-#define __HYPERVISORCORELIB_H__
+#pragma once
 
 #include <Hypervyse/Status.h>
 
@@ -19,5 +18,3 @@ EFIAPI
 HyvBackendInitialize (
   VOID
   );
-
-#endif

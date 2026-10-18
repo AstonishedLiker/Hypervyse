@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 def main():
-    root = Path(__file__).resolve().parents[2]
+    root = Path(__file__).resolve().parents[3]
     settings = json.loads((root / "out/formatter.json").read_text())
     executable = Path(settings["executable"])
     config = Path(settings["config"])

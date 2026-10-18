@@ -9,8 +9,7 @@
   SPDX-License-Identifier: MIT
 **/
 
-#ifndef __SILICONVENDOR_H__
-#define __SILICONVENDOR_H__
+#pragma once
 
 // Supported silicon vendors
 typedef enum {
@@ -19,5 +18,3 @@ typedef enum {
 } HYV_SILICON_VENDOR;
 
 #define HYV_BUILD_SILICON_VENDOR  ((HYV_SILICON_VENDOR)FixedPcdGet8 (PcdSiliconVendor))
-
-#endif

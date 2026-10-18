@@ -9,8 +9,7 @@
   SPDX-License-Identifier: MIT
 **/
 
-#ifndef __STATUS_H__
-#define __STATUS_H__
+#pragma once
 
 typedef enum {
   HyvStatusSuccess = 0,
@@ -20,5 +19,3 @@ typedef enum {
   HyvStatusInvalidState,
   HyvStatusHardwareError
 } HYV_STATUS;
-
-#endif

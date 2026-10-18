@@ -2,7 +2,7 @@
 
 <div>
   <img alt="Hit Counter Badge" src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2FAstonishedLiker%2FHypervyse&label=views+%28day+%2F+all+time%29&icon=eye-fill&color=%232362a0&message=&style=for-the-badge&tz=UTC">
-  <img alt="C Formatting Badge" src="https://img.shields.io/github/actions/workflow/status/AstonishedLiker/Hypervyse/edkii-package-ci.yml?style=for-the-badge&label=C%20formatting">
+  <img alt="Uncrustify Badge" src="https://img.shields.io/github/actions/workflow/status/AstonishedLiker/Hypervyse/uncrustify.yaml?style=for-the-badge&label=Uncrustify">
   <br/>
   <br/>
 </div>
